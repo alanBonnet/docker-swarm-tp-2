@@ -11,33 +11,30 @@ services:
         condition: on-failure
     volumes:
       - ./apache-datos:/var/www/html
-    depends_on:
-      - servicio-mysql
-    networks:
-      - mynet
     command: >
       sh -c "
         docker-php-ext-install mysqli && 
         docker-php-ext-enable mysqli && 
         apache2-foreground
       "
+    depends_on:
+      - servicio-mysql
+    networks:
+      - mynet
 
   servicio-nodejs:
-    image: node:18-alpine
+    image: nodejs-app
     ports:
       - "8090:8080"
     deploy:
       replicas: 3
       restart_policy:
         condition: on-failure
-    volumes:
-      - ./node-datos:/app
+    command: npm start
     depends_on:
       - servicio-mysql
     networks:
       - mynet
-    command: >
-      sh -c "cd /app && npm install && npm start"
 
   servicio-mysql:
     image: mysql:debian

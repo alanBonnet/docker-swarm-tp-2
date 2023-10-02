@@ -10,18 +10,26 @@ Asegúrate de tener Docker y Docker Compose instalados en tu sistema.
 
 Instrucciones de Uso
 
-# 1. Clonar el Repositorio
-
+# 1: Clonar el Repositorio
 Clona este repositorio en tu máquina local:
 ```bash
 git clone https://github.com/alanBonnet/docker-swarm-tp-2.git
 ```
+
 ```bash
-cd https://github.com/alanBonnet/docker-swarm-tp-2.git
+cd docker-swarm-tp-2
 ```
 
+# 2: Crear la Imagen de Docker para el Servicio Node.js
+Primero, debes construir la imagen de Docker para el servicio Node.js. Dirígete al directorio /node-datos y ejecuta el siguiente comando:
 
-# 2. Desplegar la Aplicación en Swarm
+```bash
+docker build -t nodejs-app ./node-datos
+```
+
+Esto creará una imagen de Docker llamada nodejs-app basada en el Dockerfile presente en ese directorio.
+
+# 3: Desplegar la Aplicación en Swarm
 
 Tener iniciado swarm:
 ```bash
@@ -36,7 +44,7 @@ docker stack deploy -c docker-compose.yml myapp
 
 Nota: Reemplaza myapp con el nombre que desees para tu servicio.
 
-# 3. Acceder a la Aplicación
+# 4. Acceder a la Aplicación
 
 Una vez que la aplicación esté desplegada, puedes acceder a ella a través de los siguientes endpoints:
 
@@ -44,17 +52,14 @@ Una vez que la aplicación esté desplegada, puedes acceder a ella a través de 
 
 - Servicio Node.js: Puedes acceder a la aplicación Node.js en http://localhost:8090. Este servicio muestra una lista de alumnos y también permite insertar nuevos registros.
 
-# 4. Detener y Limpiar los Contenedores
+# 5. Detener y Limpiar los Contenedores
 
 Para detener y eliminar los servicios de Docker Swarm, ejecuta el siguiente comando:
 
 ```bash
 docker stack rm myapp
 ```
-ó
-```bash
-docker swarm leave --force
-```
+
 Esto detendrá y eliminará todos los servicios de la aplicación.
 
 ## Estructura del Proyecto
