@@ -1,0 +1,53 @@
+version: '3.7'
+
+services:
+  servicio-apache:
+    image: php:apache-bullseye
+    ports:
+      - "8080:80"
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - ./apache-datos:/var/www/html
+    depends_on:
+      - servicio-mysql
+    networks:
+      - mynet
+    command: >
+      sh -c "
+        docker-php-ext-install mysqli && 
+        docker-php-ext-enable mysqli && 
+        apache2-foreground
+      "
+
+  servicio-nodejs:
+    image: node:18-alpine
+    ports:
+      - "8090:8080"
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - ./node-datos:/app
+    depends_on:
+      - servicio-mysql
+    networks:
+      - mynet
+    command: >
+      sh -c "cd /app && npm install && npm start"
+
+  servicio-mysql:
+    image: mysql:debian
+    volumes:
+      - ./mysql-datos:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: prueba
+    networks:
+      - mynet
+
+networks:
+  mynet:
