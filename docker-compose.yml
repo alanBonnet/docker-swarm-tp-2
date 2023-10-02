@@ -30,7 +30,8 @@ services:
       replicas: 3
       restart_policy:
         condition: on-failure
-    command: npm start
+    command: >
+      sh -c "while ! nc -z servicio-mysql 3306; do sleep 1; done; npm start"
     depends_on:
       - servicio-mysql
     networks:
