@@ -52,7 +52,7 @@ Una vez que la aplicación esté desplegada, puedes acceder a ella a través de 
 
 - Servicio Node.js: Puedes acceder a la aplicación Node.js en http://localhost:8090. Este servicio muestra una lista de alumnos y también permite insertar nuevos registros.
 
-# 5. Detener y Limpiar los Contenedores
+# Detener y Limpiar los Contenedores
 
 Para detener y eliminar los servicios de Docker Swarm, ejecuta el siguiente comando:
 
@@ -61,6 +61,15 @@ docker stack rm myapp
 ```
 
 Esto detendrá y eliminará todos los servicios de la aplicación.
+
+# Eliminar la Imagen de Docker
+Una vez que hayas detenido y eliminado los servicios, puedes eliminar la imagen de Docker que creamos en el Paso 2. Para hacerlo, ejecuta el siguiente comando:
+
+```bash
+docker rmi nodejs-app
+```
+
+Estructura del Proyecto
 
 ## Estructura del Proyecto
 
